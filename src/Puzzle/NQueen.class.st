@@ -91,14 +91,6 @@ NQueen >> makeTeritory: aPoint direction: direction on: aCollection [
 
 ]
 
-{ #category : #'instance creation' }
-NQueen >> newCandidates: candidates forPoint: aPoint [
-
-	^candidates copy
-		removeAllFoundIn: (teritories at: aPoint);
-		yourself
-]
-
 { #category : #execution }
 NQueen >> solve [
 
@@ -124,7 +116,7 @@ NQueen >> solve: candidates on: acc size: n [
 		[ :aPoint |
 			aPoint x > n ifTrue: [ ^self ].
 			self
-				solve: (self newCandidates: candidates forPoint: aPoint)
+				solve: (candidates reject: [ :each | (teritories at: aPoint) includes: each])
 				on: aPoint ~~> acc 
 				size: n + 1].
 
